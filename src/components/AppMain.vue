@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app-main ml-200">
     <router-view></router-view>
   </div>
 </template>
@@ -11,5 +11,7 @@
 </script>
 
 <style scoped>
-
+.app-main {
+  padding: 30px;
+}
 </style>

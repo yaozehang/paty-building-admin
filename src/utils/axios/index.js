@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+const baseURL = process.env.BASE_API
+
 export default class Axios {
   static instance = axios.create({
-    baseURL: '/api',
+    baseURL,
     timeout: 15000
   })
 
