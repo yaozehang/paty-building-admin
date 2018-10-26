@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div slot="header">
-        添加新闻
+        修改新闻
       </div>
       <el-form :model="formData" label-width="100px" label-position="left">
         <el-form-item label="新闻标题" >
@@ -37,7 +37,7 @@
 
 <script>
 import uploadAvatar from "@/components/upload-avatar";
-import Editor from "@/components/Editor"
+import Editor from "@/components/Editor";
 
 export default {
   components: {
@@ -56,14 +56,22 @@ export default {
         look_num: ""
       },
       users: [],
-      category:[],
-      con:""
+      category: [],
+      con: {}
     };
   },
   methods: {
+    getData() {
+      let data = this.$route.params.data
+      this.formData = data
+      this.formData.author = data.author._id
+      this.formData.type = data.type._id
+      this.con.content = data.content
+      this.con.contentText = data.contentText
+    },
     handleSubmit() {
-      this.$axios.post("/admin/news", this.formData).then(res => {
-        console.log(res);
+      let id = this.$route.params.id;
+      this.$axios.patch(`/admin/news/${id}`, this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg);
           this.$router.push("/layout/news");
@@ -84,17 +92,18 @@ export default {
         if (res.code == 200) {
           this.category = res.data;
         }
-      })
+      });
     }
   },
   created() {
+    this.getData()
     this.getUser();
-    this.getCategory()
+    this.getCategory();
   },
-  watch:{
-    con(val){
+  watch: {
+    con(val) {
       this.formData.content = val.content;
-      this.formData.contentText = val.contentText
+      this.formData.contentText = val.contentText;
     }
   }
 };

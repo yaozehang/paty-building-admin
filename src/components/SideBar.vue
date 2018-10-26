@@ -32,6 +32,17 @@
           添加新闻
         </el-menu-item>
       </el-submenu>
+      <el-submenu index="admin-swiper">
+        <div slot="title">
+          轮播图管理
+        </div>
+        <el-menu-item index="/layout/swiper" class="nav-item">
+          轮播图列表
+        </el-menu-item>
+        <el-menu-item index="/layout/swiperAdd" class="nav-item">
+          添加轮播图
+        </el-menu-item>
+      </el-submenu>
     </el-menu>
   </div>
 </template>

@@ -10,7 +10,11 @@ const components = {
   adminUser: () => import('@/views/admin'),
   adminAdd: () => import('@/views/admin/add'),
   news: () => import('@/views/news'),
-  newsAdd: () => import('@/views/news/add')
+  newsAdd: () => import('@/views/news/add'),
+  newsDetail: () => import('@/views/news/detail'),
+  newsEdit: () => import('@/views/news/edit'),
+  swiper: () => import('@/views/swiper'),
+  swiperAdd: () => import('@/views/swiper/add')
 }
 
 const router =  new Router({
@@ -66,6 +70,38 @@ const router =  new Router({
           component:components.newsAdd,
           meta:{
             title:'新闻添加',
+          }
+        },
+        {
+          path:'newsDetail',
+          name:'newsDetail',
+          component:components.newsDetail,
+          meta:{
+            title:'新闻详情'
+          }
+        },
+        {
+          path:'newsEdit',
+          name:'newsEdit',
+          component:components.newsEdit,
+          meta:{
+            title:'新闻修改'
+          }
+        },
+        {
+          path:'swiper',
+          name:'swiper',
+          component:components.swiper,
+          meta:{
+            title:'轮播图列表'
+          }
+        },
+        {
+          path:'swiperAdd',
+          name:'swiperAdd',
+          component:components.swiperAdd,
+          meta:{
+            title:'轮播图添加'
           }
         }
       ]

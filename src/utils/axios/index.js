@@ -27,4 +27,14 @@ export default class Axios {
       })
     })
   }
+
+  static patch (url, data, config) {
+    return new Promise((resolve, reject) => {
+      this.instance.patch(url, data, config).then(res => {
+        resolve(res.data)
+      }).catch(err => {
+      reject(err)
+      })
+    })
+  }
 }

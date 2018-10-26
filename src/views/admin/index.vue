@@ -21,6 +21,13 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        layout="total, prev, pager, next"
+        :total="total"
+        style="padding-top:10px; float:right;">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -29,7 +36,8 @@
   export default {
     data(){
       return {
-        tableData:[]
+        tableData:[],
+        total:0
       }
     },
     methods:{
@@ -38,8 +46,12 @@
           console.log(res);
           if(res.code == 200){
             this.tableData = res.data
+            this.total = res.total
           }
         })
+      },
+      handleCurrentChange(val){
+        this.getData(val)
       }
     },
     created(){

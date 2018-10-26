@@ -23,7 +23,7 @@ Quill.register("modules/ImageExtend", ImageExtend);
 
 export default {
   props: {
-    value: String
+    value: Object
   },
   components: {
     quillEditor
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       token: "",
-      content: this.value,
+      content: this.value.content,
+      contentText: this.value.contentText,
       editorOption: {
         modules: {
           ImageExtend: {
@@ -80,9 +81,13 @@ export default {
         }
       });
     },
-    onEditorChange(res){
-      this.content = res.html
-      this.$emit("input", this.content);
+    onEditorChange(res) {
+      this.content = res.html;
+      this.contentText = res.text;
+      this.$emit("input", {
+        content: this.content,
+        contentText: this.contentText
+      });
     }
   },
   created() {
@@ -90,7 +95,8 @@ export default {
   },
   watch: {
     value(val) {
-      this.content = val;
+      this.content = val.content;
+      this.contentText = val.contentText;
     }
   }
 };

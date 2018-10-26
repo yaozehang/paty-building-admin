@@ -22,14 +22,6 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-        background
-        @current-change="handleCurrentChange"
-        layout="total, prev, pager, next"
-        :page-size="10"
-        :total="total"
-        style="padding-top:10px; float:right;">
-      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -39,23 +31,18 @@
     data(){
       return {
         tableData:[],
-        total:0
       }
     },
     methods:{
-      getData(page){
-        this.$axios.get('/admin/news',{page}).then(res => {
+      getData(){
+        this.$axios.get('/admin/news').then(res => {
           if(res.code == 200){
             this.tableData = res.data
-            this.total = res.total
           }
         })
       },
       hanleDetail(row){
         this.$router.push({name:'newsDetail',params:{id:row._id}})
-      },
-      handleCurrentChange(val){
-        this.getData(val)
       }
     },
     created(){

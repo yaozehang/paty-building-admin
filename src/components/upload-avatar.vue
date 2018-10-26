@@ -69,8 +69,7 @@
     text-align: center;
   }
   .avatar {
-    width: 178px;
-    height: 178px;
+    width: 200px;
     display: block;
   }
 </style>
