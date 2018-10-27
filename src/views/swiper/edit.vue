@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <div slot="header">
-        添加轮播图
+        编辑轮播图
       </div>
       <el-form :model="formData" label-width="100px" label-position="left">
         <el-form-item label="标题" style="width: 800px;" >
@@ -84,24 +84,33 @@ export default {
         title: "",
         news: "",
         img: "",
-        sort:"", //控制排序
-        status:1 //控制显示
+        sort: "", //控制排序
+        status: 1 //控制显示
       },
-      handleNews:{
-        title:"",
-        _id:"",
-        img:""
+      handleNews: {
+        title: "",
+        _id: "",
+        img: ""
       },
       newsData: [],
       total: 0,
       dialogVisible: false,
-      isAdd:false,
+      isAdd: false
     };
   },
   methods: {
+    getData() {
+      let data = this.$route.params.data;
+      this.formData = data;
+      this.handleNews.title = data.news.title;
+      this.handleNews._id = data.news._id;
+      this.handleNews.img = data.news.img;
+      this.isAdd = true;
+    },
     handleSubmit() {
-      this.$axios.post("/admin/swiper", this.formData).then(res => {
-        console.log(res);
+      this.formData.news = this.handleNews._id;
+      let id = this.$route.params.data._id;
+      this.$axios.patch(`/admin/swiper/${id}`, this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg);
           this.$router.push("/layout/swiper");
@@ -111,7 +120,7 @@ export default {
       });
     },
     getNews(page) {
-      this.$axios.get("/admin/news", { page,row:4 }).then(res => {
+      this.$axios.get("/admin/news", { page, row: 4 }).then(res => {
         if (res.code == 200) {
           this.newsData = res.data;
           this.total = res.total;
@@ -123,21 +132,21 @@ export default {
     },
     handleAdd(row) {
       this.dialogVisible = false;
-      this.handleNews.title = row.title
-      this.handleNews.img = row.img
-      this.handleNews._id = row._id
-      this.formData.news = row._id
+      this.handleNews.title = row.title;
+      this.handleNews.img = row.img;
+      this.handleNews._id = row._id;
+      this.formData.news = row._id;
       this.isAdd = true;
     }
   },
   created() {
     this.getNews();
+    this.getData();
   }
 };
 </script>
 
 <style scoped lang="scss">
-
 </style>
 <style>
 .el-dialog__body {

@@ -1,7 +1,7 @@
 <template>
   <div class="side-bar">
     <el-menu
-      default-active="2"
+      :default-active="$route.name"
       class="el-menu-vertical-demo"
       background-color="#2d3a4b"
       text-color="#fff"
@@ -10,36 +10,36 @@
       <el-menu-item index="/layout/home">
           首页
       </el-menu-item>
-      <el-submenu index="admin-manage">
+      <el-submenu index="layout">
         <div slot="title">
           管理员管理
         </div>
-        <el-menu-item index="/layout/adminUser" class="nav-item">
+        <el-menu-item index="adminUser" class="nav-item">
           管理员列表
         </el-menu-item>
-        <el-menu-item index="/layout/adminAdd" class="nav-item">
+        <el-menu-item index="adminAdd" class="nav-item">
           添加管理员
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="admin-news">
+      <el-submenu index="layout">
         <div slot="title">
           新闻管理
         </div>
-        <el-menu-item index="/layout/news" class="nav-item">
+        <el-menu-item index="news" class="nav-item">
           新闻列表
         </el-menu-item>
-        <el-menu-item index="/layout/newsAdd" class="nav-item">
+        <el-menu-item index="newsAdd" class="nav-item">
           添加新闻
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="admin-swiper">
+      <el-submenu index="layout">
         <div slot="title">
           轮播图管理
         </div>
-        <el-menu-item index="/layout/swiper" class="nav-item">
+        <el-menu-item index="swiper" class="nav-item">
           轮播图列表
         </el-menu-item>
-        <el-menu-item index="/layout/swiperAdd" class="nav-item">
+        <el-menu-item index="swiperAdd" class="nav-item">
           添加轮播图
         </el-menu-item>
       </el-submenu>

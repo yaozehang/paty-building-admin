@@ -3,9 +3,9 @@
     <div class="fll">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item :to="{ path: '/layout/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path: '/layout/adminUser' }">管理员列表</el-breadcrumb-item>
-        <el-breadcrumb-item :to="{ path:'/layout/adminAdd' }">添加管理员</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <el-breadcrumb-item v-for="item in breadList" v-bind:key="item.path" v-if="item.meta.title">
+            <router-link :to="item.redirect||item.path">{{item.meta.title}}</router-link>
+        </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="flr menu">
@@ -27,9 +27,27 @@
 </template>
 
 <script>
-  export default {
-    
+export default {
+  data() {
+    return {
+      breadList: []
+    };
+  },
+  methods: {
+    getBreadcrumb() {
+      let matched = this.$route.matched.filter(item => item.meta.title);
+      this.breadList = matched;
+    }
+  },
+  created() {
+    this.getBreadcrumb();
+  },
+  watch: {
+    $route(to, from) {
+      this.getBreadcrumb();
+    }
   }
+};
 </script>
 
 <style scoped lang="scss">

@@ -37,4 +37,14 @@ export default class Axios {
       })
     })
   }
+
+  static delete (url, data, config) {
+    return new Promise((resolve, reject) => {
+      this.instance.delete(url, config).then(res => {
+        resolve(res.data)
+      }).catch(err => {
+      reject(err)
+      })
+    })
+  }
 }

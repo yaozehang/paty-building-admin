@@ -33,3 +33,10 @@ a {
 .app-main .el-card {
   min-height: calc(100vh - 160px)
 }
+
+.el-table .cell{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+  overflow:hidden;
+}

@@ -9,12 +9,15 @@ const components = {
   home: () => import('@/views/home'),
   adminUser: () => import('@/views/admin'),
   adminAdd: () => import('@/views/admin/add'),
+  adminDetail: () => import('@/views/admin/detail'),
+  adminEdit: () => import('@/views/admin/add'),
   news: () => import('@/views/news'),
   newsAdd: () => import('@/views/news/add'),
   newsDetail: () => import('@/views/news/detail'),
   newsEdit: () => import('@/views/news/edit'),
   swiper: () => import('@/views/swiper'),
-  swiperAdd: () => import('@/views/swiper/add')
+  swiperAdd: () => import('@/views/swiper/add'),
+  swiperEdit: () => import('@/views/swiper/edit')
 }
 
 const router =  new Router({
@@ -29,6 +32,7 @@ const router =  new Router({
     },
     {
       path:'/layout',
+      name:'layout',
       component:components.layout,
       redirect:'/layout/home',
       children: [
@@ -54,6 +58,22 @@ const router =  new Router({
           component:components.adminAdd,
           meta:{
             title:'添加管理员'
+          }
+        },
+        {
+          path:'adminDetail',
+          name:'adminDetail',
+          component:components.adminDetail,
+          meta:{
+            title:'管理员详情'
+          }
+        },
+        {
+          path:'adminEdit',
+          name:'adminEdit',
+          component:components.adminEdit,
+          meta:{
+            title:'管理员编辑'
           }
         },
         {
@@ -102,6 +122,14 @@ const router =  new Router({
           component:components.swiperAdd,
           meta:{
             title:'轮播图添加'
+          }
+        },
+        {
+          path:'swiperEdit',
+          name:'swiperEdit',
+          component:components.swiperEdit,
+          meta:{
+            title:'轮播图编辑'
           }
         }
       ]
