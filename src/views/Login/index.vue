@@ -33,6 +33,7 @@ export default {
       this.$axios.post("/admin/adminUser/login", this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg);
+          this.$store.commit('CHANGE_USERINFO',res.data)
           this.$router.push({name:'home'});
         } else {
           this.$message.info(res.msg);

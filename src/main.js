@@ -13,6 +13,8 @@ Vue.use(ElementUI);
 
 import axios from './utils/axios'
 
+import store from './store'
+
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios //全局导入axios
 
@@ -20,6 +22,7 @@ Vue.prototype.$axios = axios //全局导入axios
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

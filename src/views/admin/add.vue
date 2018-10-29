@@ -92,6 +92,7 @@ export default {
         if (res.code == 200) {
           this.$message.success(res.msg);
           this.isEdit = false
+          this.$store.commit('CHANGE_USERINFO',this.formData)
           this.$router.push("/layout/adminUser");
         } else {
           this.$message.error(res.msg);

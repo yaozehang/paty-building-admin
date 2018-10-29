@@ -17,7 +17,11 @@ const components = {
   newsEdit: () => import('@/views/news/edit'),
   swiper: () => import('@/views/swiper'),
   swiperAdd: () => import('@/views/swiper/add'),
-  swiperEdit: () => import('@/views/swiper/edit')
+  swiperEdit: () => import('@/views/swiper/edit'),
+  editPassword: () => import('@/views/admin/editPassword'),
+  topic: () => import('@/views/topic'),
+  topicAdd: () => import('@/views/topic/add'),
+  topicDetail: () => import('@/views/topic/detail')
 }
 
 const router =  new Router({
@@ -77,6 +81,14 @@ const router =  new Router({
           }
         },
         {
+          path:'editPassword',
+          name:'editPassword',
+          component:components.editPassword,
+          meta:{
+            title:'修改密码'
+          }
+        },
+        {
           path:'news',
           name:'news',
           component:components.news,
@@ -130,6 +142,30 @@ const router =  new Router({
           component:components.swiperEdit,
           meta:{
             title:'轮播图编辑'
+          }
+        },
+        {
+          path:'topic',
+          name:'topic',
+          component:components.topic,
+          meta:{
+            title:'讨论列表'
+          }
+        },
+        {
+          path:'topicAdd',
+          name:'topicAdd',
+          component:components.topicAdd,
+          meta:{
+            title:'发起讨论'
+          }
+        },
+        {
+          path:'topicDetail',
+          name:'topicDetail',
+          component:components.topicDetail,
+          meta:{
+            title:'讨论详情'
           }
         }
       ]

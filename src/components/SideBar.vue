@@ -10,7 +10,7 @@
       <el-menu-item index="/layout/home">
           首页
       </el-menu-item>
-      <el-submenu index="layout">
+      <el-submenu index="admin">
         <div slot="title">
           管理员管理
         </div>
@@ -21,7 +21,7 @@
           添加管理员
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="layout">
+      <el-submenu index="news">
         <div slot="title">
           新闻管理
         </div>
@@ -32,7 +32,7 @@
           添加新闻
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="layout">
+      <el-submenu index="swiper">
         <div slot="title">
           轮播图管理
         </div>
@@ -41,6 +41,14 @@
         </el-menu-item>
         <el-menu-item index="swiperAdd" class="nav-item">
           添加轮播图
+        </el-menu-item>
+      </el-submenu>
+      <el-submenu index="topic">
+        <div slot="title">
+          讨论管理
+        </div>
+        <el-menu-item index="topic" class="nav-item">
+          讨论列表
         </el-menu-item>
       </el-submenu>
     </el-menu>

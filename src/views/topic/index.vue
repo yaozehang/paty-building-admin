@@ -2,22 +2,21 @@
   <div>
     <el-card>
       <div slot="header">
-        新闻列表
+        讨论列表
+        <el-button style="float: right; padding: 3px 0" type="text" @click="handleAdd">发起新讨论</el-button>
       </div>
       <el-table :data="tableData" v-loading="loading">
-        <el-table-column label="新闻标题" prop="title" />
-        <el-table-column label="新闻作者" prop="author.nickname" />
-        <el-table-column label="新闻头图" prop="img">
+        <el-table-column label="用户头像">
           <template slot-scope="scope">
-            <img :src="scope.row.img" alt="" class="table-item-img">
+            <img :src="scope.row.user.avatar" alt="" class="table-item-img">
           </template>
-        </el-table-column>  
-        <el-table-column label="新闻内容" prop="contentText"/>
-        <el-table-column label="新闻类型" prop="type.title" />
-        <el-table-column label="观看人数" prop="look_num" />
+        </el-table-column>
+        <el-table-column label="用户名" prop="user.username" />
+        <el-table-column label="内容" prop="content" />
+        <el-table-column label="发表时间" prop="create_time" />
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="mini" @click="hanleDetail(scope.row)">查看详细</el-button>
+            <el-button type="primary" size="mini" @click="hanleDetail(scope.row)">查看详情</el-button>
             <el-button type="danger" size="mini" @click="handleDelete(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -26,7 +25,7 @@
         background
         @current-change="handleCurrentChange"
         layout="total, prev, pager, next"
-        :page-size="10"
+        :page-size="5"
         :total="total"
         style="padding:10px 0; float:right;">
       </el-pagination>
@@ -39,30 +38,35 @@ export default {
   data() {
     return {
       tableData: [],
-      total: 0,
-      loading:false,
+      loading: false,
+      total:0
     };
   },
   methods: {
     getData(page) {
-      this.loading = true
-      this.$axios.get("/admin/news", { page, row: 5 }).then(res => {
+      this.isloading = true;
+      this.$axios.get("/admin/topic",{page,row:5}).then(res => {
         if (res.code == 200) {
+          let data = res.data;
+          data.forEach(item => {
+            item.create_time = new Date(item.create_time).toLocaleString();
+          });
+          res.data = data;
           this.tableData = res.data;
           this.total = res.total;
-          this.loading = false
+          this.loading = false;
         }
       });
     },
-    hanleDetail(row) {
-      this.$router.push({ name: "newsDetail", params: { id: row._id } });
+    handleAdd() {
+      this.$router.push({ name: "topicAdd" });
     },
     handleCurrentChange(val) {
       this.getData(val);
     },
     handleDelete(row) {
       let id = row._id;
-      this.$axios.delete(`/admin/news/${id}`).then(res => {
+      this.$axios.delete(`/admin/topic/${id}`).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg);
           this.getData();
@@ -70,6 +74,9 @@ export default {
           this.$message.error(res.msg);
         }
       });
+    },
+    hanleDetail(row){
+      this.$router.push({name:'topicDetail',params:{id:row._id,data:row}})
     }
   },
   created() {
@@ -78,11 +85,5 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-// /deep/.el-table .cell{
-//   display:-webkit-box;
-//   -webkit-box-orient:vertical;
-//   -webkit-line-clamp:3;
-//   overflow:hidden;
-// }
+<style scoped>
 </style>

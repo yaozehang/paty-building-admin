@@ -31,7 +31,7 @@
         layout="total, prev, pager, next"
         :page-size="5"
         :total="total"
-        style="padding-top:10px; float:right;">
+        style="padding:10px 0; float:right;">
       </el-pagination>
     </el-card>
   </div>

@@ -44,6 +44,7 @@
       getData(){
         let id = this.$route.params.id
         this.$axios.get(`/admin/news/${id}`).then(res => {
+          res.data.create_time = (new Date(res.data.create_time)).toLocaleString()
           this.formData = res.data
         })
       },
