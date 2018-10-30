@@ -3,6 +3,11 @@
     <el-card>
       <div slot="header">
         新闻列表
+        <div class="flr">
+          <i class="el-icon-search"></i>
+          <input type="text" v-model="searchText">
+          <el-button type="primary" size="mini" @click="handleSearch">查询</el-button>
+        </div>
       </div>
       <el-table :data="tableData" v-loading="loading">
         <el-table-column label="新闻标题" prop="title" />
@@ -41,6 +46,7 @@ export default {
       tableData: [],
       total: 0,
       loading:false,
+      searchText:''
     };
   },
   methods: {
@@ -70,6 +76,11 @@ export default {
           this.$message.error(res.msg);
         }
       });
+    },
+    handleSearch(){
+      this.$axios.get('/admin/news/search',{title:this.searchText}).then(res => {
+        console.log(res);
+      })
     }
   },
   created() {

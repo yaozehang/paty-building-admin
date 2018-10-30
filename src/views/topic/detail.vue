@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-card>
-      <div class="topic">
+      <div class="topic" slot="header">
         <div class="clearfix header">
             <img :src="topicData.user.avatar" class="img fll">
             <div class="fll header-right">
@@ -12,17 +12,31 @@
                 {{topicData.create_time}}
               </div>
             </div>
-            <el-button style="float: right; padding: 3px 0" type="text">编辑</el-button>
         </div>
         <div class="top-content">
           {{topicData.content}}
         </div>
       </div>
+      <div class="title">
+        评论
+      </div>
+      <div>
+        <el-form class="form">
+          <el-form-item>
+            <el-input
+              type="textarea"
+              :autosize="{ minRows: 5}"
+              placeholder="请输入内容"
+              class="newCommon"
+              v-model="newCommon">
+            </el-input>
+          </el-form-item>
+          <el-form-item style="margin-left:100px">
+            <el-button type="primary" @click="report">发表</el-button>
+          </el-form-item>
+        </el-form>        
+      </div>
       <div class="common" v-for="(item, index) in common" v-bind:key="index">
-        <div class="com-title">
-          评论
-          <el-button style="float: right; padding: 3px 0" type="text">加入评论</el-button>
-        </div>
         <div class="clearfix header">
             <img :src="item.user.avatar" class="img fll">
             <div class="fll header-right">
@@ -35,15 +49,25 @@
             </div>
             <div class="flr tower">
               {{index+1}}楼
+              <el-button  icon="el-icon-delete" circle style="float:right padding: 3px 0; color:red;" type="text" @click="hanleDetail(item._id)"></el-button>
             </div>
         </div>
         <div class="content">
           {{item.content}}
         </div>
       </div>
-      <div class="bottom">
-          已经没有评论啦
+      <div v-show="!isShow" style="padding-top:20px;text-align:center;">
+        暂无评论
       </div>
+      <el-pagination
+        background
+        @current-change="handleCurrentChange"
+        layout="total, prev, pager, next"
+        :page-size="5"
+        :total="total"
+        style="padding:10px 0; float:right;"
+        v-show="isShow">
+      </el-pagination>
     </el-card>
   </div>
 </template>
@@ -54,14 +78,16 @@ export default {
     return {
       topicData: {},
       common: [],
-      total: 0
+      total: 0,
+      isShow: false,
+      newCommon:''
     };
   },
   methods: {
-    getData() {
+    getData(page) {
       let id = this.$route.params.id;
       this.topicData = this.$route.params.data;
-      this.$axios.get(`/admin/common/getCommon/${id}`).then(res => {
+      this.$axios.get(`/admin/common/getCommon/${id}`,{page,row:5}).then(res => {
         let data = res.data
         data.forEach(item => {
           item.create_time = (new Date(item.create_time)).toLocaleString()
@@ -69,6 +95,36 @@ export default {
         res.data = data
         this.common = res.data;
         this.total = res.total;
+        if(this.total == 0){
+          this.isShow = false
+        } else {
+          this.isShow = true
+        }
+      });
+    },
+    handleCurrentChange(val) {
+      this.getData(val);
+    },
+    report(){
+      let topic_id = this.$route.params.id
+      this.$axios.post(`/admin/common`,{content:this.newCommon,topic_id}).then(res => {
+        if(res.code == 200){
+          this.newCommon = ""
+          this.$message.success('发表成功')
+          this.getData()
+        } else {
+          this.$message.error('发表失败')
+        }
+      })
+    },
+    hanleDetail(id){
+      this.$axios.delete(`/admin/common/${id}`).then(res => {
+        if (res.code == 200) {
+          this.$message.success(res.msg);
+          this.getData();
+        } else {
+          this.$message.error(res.msg);
+        }
       });
     }
   },
@@ -79,9 +135,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.topic {
-  border-bottom: 1px solid #f1f1f1;
-}
 .header {
   .img {
     width: 50px;
@@ -101,7 +154,7 @@ export default {
   }
 }
 .top-content {
-  padding: 20px 60px 70px 60px;
+  padding: 20px 60px 60px 60px;
   box-sizing: border-box;
 }
 .content {
@@ -109,7 +162,14 @@ export default {
   box-sizing: border-box;
 }
 
+.title {
+    padding: 20px 0;
+    color: #999;
+    font-size: 16px;
+  }
+
 .common {
+  padding: 20px;
   .com-title {
     padding: 20px 0;
     color: #999;
@@ -118,13 +178,14 @@ export default {
   border-bottom: 1px solid #f1f1f1;
 }
 
-.bottom {
-  color:#ddd;
-  padding:10px 0;
-  text-align: center;
-}
-
 .tower {
   color:#999;
+}
+.form {
+  border-bottom: 1px solid #f1f1f1;
+}
+.newCommon {
+  width: 80%;
+  margin-left: 100px;
 }
 </style>

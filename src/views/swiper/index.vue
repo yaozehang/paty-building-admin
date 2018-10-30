@@ -3,6 +3,11 @@
     <el-card>
       <div slot="header">
         轮播图列表
+        <div class="flr">
+          <i class="el-icon-search"></i>
+          <input type="text">
+          <el-button type="primary" size="mini" >查询</el-button>
+        </div>
       </div>
       <el-table :data="tableData" v-loading="loading">
         <el-table-column label="轮播图" prop="img">
