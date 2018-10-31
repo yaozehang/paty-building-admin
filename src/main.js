@@ -8,6 +8,8 @@ import 'normalize.css/normalize.css' //引入初始化样式
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './style/index.scss'
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 Vue.use(ElementUI);
 

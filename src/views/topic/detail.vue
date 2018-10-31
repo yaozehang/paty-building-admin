@@ -63,7 +63,7 @@
         background
         @current-change="handleCurrentChange"
         layout="total, prev, pager, next"
-        :page-size="5"
+        :page-size="10"
         :total="total"
         style="padding:10px 0; float:right;"
         v-show="isShow">
@@ -87,7 +87,7 @@ export default {
     getData(page) {
       let id = this.$route.params.id;
       this.topicData = this.$route.params.data;
-      this.$axios.get(`/admin/common/getCommon/${id}`,{page,row:5}).then(res => {
+      this.$axios.get(`/admin/common/getCommon/${id}`,{page}).then(res => {
         let data = res.data
         data.forEach(item => {
           item.create_time = (new Date(item.create_time)).toLocaleString()

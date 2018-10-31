@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <vue-particles color="#dedede" class="bg"></vue-particles>
     <div class="login-box">
       <h2>党建E家后台管理系统</h2>
       <el-form v-model="formData">
@@ -14,7 +15,6 @@
         </el-form-item>
       </el-form>
     </div>
-
   </div>
 </template>
 
@@ -33,8 +33,8 @@ export default {
       this.$axios.post("/admin/adminUser/login", this.formData).then(res => {
         if (res.code == 200) {
           this.$message.success(res.msg);
-          this.$store.commit('CHANGE_USERINFO',res.data)
-          this.$router.push({name:'home'});
+          this.$store.commit("CHANGE_USERINFO", res.data);
+          this.$router.push({ name: "home" });
         } else {
           this.$message.info(res.msg);
         }
@@ -48,7 +48,6 @@ export default {
 .login {
   overflow: hidden;
   height: 100vh;
-  background: #2d3a4b;
 
   h2 {
     color: #fff;
@@ -57,11 +56,14 @@ export default {
   }
 
   .login-box {
+    position: absolute;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%,-50%);
     width: 500px;
     height: 400px;
     border-radius: 6px;
     border: 1px solid #f1f1f1;
-    margin: 100px auto;
     padding: 30px;
     box-sizing: border-box;
   }
@@ -78,5 +80,14 @@ export default {
     width: 100%;
     box-sizing: border-box;
   }
+}
+
+.bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: url("/static/img/beijing.jpg") no-repeat;
+  background-size: cover;
 }
 </style>

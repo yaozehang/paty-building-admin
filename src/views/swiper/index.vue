@@ -5,8 +5,8 @@
         轮播图列表
         <div class="flr">
           <i class="el-icon-search"></i>
-          <input type="text">
-          <el-button type="primary" size="mini" >查询</el-button>
+          <input type="text" v-model="searchText" @keyup.enter="handleSearch">
+          <el-button type="primary" size="mini" @click="handleSearch">查询</el-button>
         </div>
       </div>
       <el-table :data="tableData" v-loading="loading">
@@ -36,8 +36,10 @@
         layout="total, prev, pager, next"
         :page-size="5"
         :total="total"
+        v-show="!isShow"
         style="padding:10px 0; float:right;">
       </el-pagination>
+      <el-button type="primary" size="mini" style="margin:10px 0; float:right;" v-show="isShow" @click="handleBack">返回</el-button>
     </el-card>
   </div>
 </template>
@@ -48,7 +50,9 @@ export default {
     return {
       tableData: [],
       total: 0,
-      loading: false
+      loading: false,
+      searchText: "",
+      isShow: false
     };
   },
   methods: {
@@ -78,6 +82,31 @@ export default {
           this.$message.error(res.msg);
         }
       });
+    },
+    handleSearch() {
+      if (this.searchText == "") {
+        this.$notify.error({
+          title: "错误",
+          message: "请输入查询信息"
+        });
+      } else {
+        this.loading = true;
+        this.$axios
+          .get("/admin/swiper/search/title", {
+            title: this.searchText
+          })
+          .then(res => {
+            if (res.code == 200) {
+              this.tableData = res.data;
+              this.loading = false;
+              this.isShow = true;
+            }
+          });
+      }
+    },
+    handleBack() {
+      this.getData();
+      this.isShow = false;
     }
   },
   created() {
