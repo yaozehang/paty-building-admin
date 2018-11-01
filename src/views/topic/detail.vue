@@ -156,10 +156,12 @@ export default {
 .top-content {
   padding: 20px 60px 60px 60px;
   box-sizing: border-box;
+  line-height: 1.5;
 }
 .content {
   padding: 20px 60px;
   box-sizing: border-box;
+  line-height: 1.5;
 }
 
 .title {
